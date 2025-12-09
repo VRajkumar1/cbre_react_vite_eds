@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { EmeraldButton } from "@emerald-react/button";
 import reactLogo from "./assets/react.svg";
 import EmeraldLogo from "./assets/emerald-logo.png";
 import viteLogo from "/vite.svg";
@@ -26,15 +27,13 @@ function App() {
       </div>
       <h1>Vite + React + EDS</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+        <EmeraldButton onClick={() => setCount((count) => count + 1)}>count is {count}</EmeraldButton>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
       </div>
       <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
+        Click on the Vite, React & Emerald logos to learn more
       </p>
     </>
   );
