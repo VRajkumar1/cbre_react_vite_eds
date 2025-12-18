@@ -1,0 +1,2 @@
+- Strictly use Emerald Components if available
+- Use V2 version of Components. For Example: Instead of EmeraldDatepicker use EmeraldDatepickerV2 and so on.
