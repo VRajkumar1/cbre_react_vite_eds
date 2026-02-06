@@ -331,8 +331,19 @@ const EmeraldComponentsPage: React.FC = () => {
       {/* Preview Area */}
       <main className="emerald-preview">
         <header className="preview-header">
-          <h1>{selectedComponent.name}</h1>
-          <EmeraldBadge variant="info">{selectedComponent.category}</EmeraldBadge>
+          <div className="title-section">
+            <h1>{selectedComponent.name}</h1>
+            <EmeraldBadge variant="info">{selectedComponent.category}</EmeraldBadge>
+          </div>
+          <div className="test-status">
+            {isTesting ? (
+              <span className="testing-indicator">Testing props...</span>
+            ) : (
+              <EmeraldBadge variant={Object.values(testResults).some(r => r.status === 'fail') ? 'error' : 'success'}>
+                {Object.values(testResults).some(r => r.status === 'fail') ? 'Prop Tests Failed' : 'Prop Tests Passed'}
+              </EmeraldBadge>
+            )}
+          </div>
         </header>
 
         <section className="preview-workspace">
