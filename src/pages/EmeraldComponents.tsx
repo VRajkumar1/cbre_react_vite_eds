@@ -16,6 +16,11 @@ import { EmeraldTooltip } from "@emerald-react/tooltip";
 import { EmeraldAvatar } from "@emerald-react/avatar";
 import { EmeraldProgressIndicator } from "@emerald-react/progress-indicator";
 import { EmeraldBreadcrumb } from "@emerald-react/breadcrumb";
+import { EmeraldIconButton } from "@emerald-react/icon-button";
+import { EmeraldButtonGroup } from "@emerald-react/button-group";
+import { EmeraldSlider } from "@emerald-react/slider";
+import { EmeraldList, EmeraldListItem } from "@emerald-react/list";
+import { EmeraldDataTable } from "@emerald-react/data-table";
 
 // --- Types & Registry ---
 
