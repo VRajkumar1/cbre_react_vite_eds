@@ -151,6 +151,27 @@ const COMPONENT_REGISTRY: ComponentMetadata[] = [
       { name: 'subtitle', type: 'string', defaultValue: 'Card Subtitle' },
       { name: 'outlined', type: 'boolean', defaultValue: true },
     ]
+  },
+  {
+    id: 'emerald-tab-group',
+    name: 'EmeraldTabGroup',
+    category: 'Navigation',
+    component: (props: any) => (
+      <EmeraldTabGroup
+        {...props}
+        data={[
+          { label: 'Tab 1', content: 'Content for tab 1' },
+          { label: 'Tab 2', content: 'Content for tab 2' },
+          { label: 'Tab 3', content: 'Content for tab 3' }
+        ]}
+      />
+    ),
+    props: [
+      { name: 'activeTabIndex', type: 'number', defaultValue: 0 },
+      { name: 'direction', type: 'enum', defaultValue: 'horizontal', options: ['horizontal', 'vertical'] },
+      { name: 'iconPosition', type: 'enum', defaultValue: 'left', options: ['left', 'top'] },
+      { name: 'showArrows', type: 'boolean', defaultValue: false },
+    ]
   }
 ];
 
