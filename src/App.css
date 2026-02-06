@@ -121,6 +121,43 @@
   color: #003F2D;
 }
 
+/* Nav Divider */
+.nav-divider {
+  height: 1px;
+  background-color: rgba(0, 63, 45, 0.15);
+  margin: 0;
+}
+
+/* Expandable Nav Item */
+.nav-item-expandable {
+  cursor: pointer;
+}
+
+/* Nav Caret */
+.nav-caret {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  margin-left: auto;
+  transition: transform 0.2s ease;
+}
+
+.nav-caret.expanded {
+  transform: rotate(180deg);
+}
+
+/* Sub-menu Items */
+.nav-sub-item {
+  padding-left: 48px;
+}
+
+.nav-sub-item:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
 /* Pin Button Wrapper */
 .nav-pin-wrapper {
   display: flex;
