@@ -11,6 +11,11 @@ import { EmeraldDropdown } from "@emerald-react/dropdown";
 import { EmeraldAccordionGroup, EmeraldAccordion } from "@emerald-react/accordion-group";
 import { EmeraldCard } from "@emerald-react/card";
 import { EmeraldTabGroup, EmeraldTabBar, EmeraldTab } from "@emerald-react/tab-group";
+import { EmeraldModal } from "@emerald-react/modal";
+import { EmeraldTooltip } from "@emerald-react/tooltip";
+import { EmeraldAvatar } from "@emerald-react/avatar";
+import { EmeraldProgressIndicator } from "@emerald-react/progress-indicator";
+import { EmeraldBreadcrumb } from "@emerald-react/breadcrumb";
 
 // --- Types & Registry ---
 
