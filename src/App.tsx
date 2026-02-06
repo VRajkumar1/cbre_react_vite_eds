@@ -85,7 +85,7 @@ function AppContent() {
       </header>
 
       {/* Sidebar Navigation */}
-      <aside 
+      <aside
         className={`sidebar ${navExpanded ? 'expanded' : ''}`}
         onMouseEnter={handleNavMouseEnter}
         onMouseLeave={handleNavMouseLeave}
@@ -111,6 +111,50 @@ function AppContent() {
               </Link>
             );
           })}
+
+          {/* Coded Components with submenu */}
+          {navExpanded && <div className="nav-divider"></div>}
+
+          <div
+            className="nav-item nav-item-expandable"
+            onClick={() => setCodedComponentsExpanded(!codedComponentsExpanded)}
+          >
+            <div className="nav-icon">
+              <span className="material-icons" style={{ color: '#5A5A5A' }}>
+                category
+              </span>
+            </div>
+            {navExpanded && (
+              <>
+                <div className="nav-label">Coded components</div>
+                <div className={`nav-caret ${codedComponentsExpanded ? 'expanded' : ''}`}>
+                  <span className="material-icons" style={{ color: '#5A5A5A' }}>
+                    keyboard_arrow_down
+                  </span>
+                </div>
+              </>
+            )}
+          </div>
+
+          {/* Submenu items */}
+          {navExpanded && codedComponentsExpanded && (
+            <>
+              <Link
+                to="/coded-components/emerald"
+                className="nav-item nav-sub-item"
+                style={{ textDecoration: 'none' }}
+              >
+                <div className="nav-label">Emerald</div>
+              </Link>
+              <Link
+                to="/coded-components/custom"
+                className="nav-item nav-sub-item"
+                style={{ textDecoration: 'none' }}
+              >
+                <div className="nav-label">Custom</div>
+              </Link>
+            </>
+          )}
         </div>
 
         {navExpanded && (
