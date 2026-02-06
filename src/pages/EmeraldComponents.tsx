@@ -256,6 +256,32 @@ const EmeraldComponentsPage: React.FC = () => {
     setCurrentProps(prev => ({ ...prev, [name]: value }));
   };
 
+  // Centralized change handler for the component in the preview
+  const handlePreviewChange = (arg1: any, arg2?: any) => {
+    // Find the primary value-carrying prop for this component
+    const propToUpdate = selectedComponent.props.find(p => p.name === 'selected' || p.name === 'checked' || p.name === 'value');
+    if (!propToUpdate) return;
+
+    let newValue: any;
+
+    // Component-specific heuristics for onChange signatures
+    if (selectedComponent.id.includes('switch') || selectedComponent.id.includes('checkbox')) {
+      // Signature: (checked/selected, event)
+      newValue = arg1;
+    } else if (selectedComponent.id.includes('dropdown') || selectedComponent.id.includes('select')) {
+      // Signature: (event, value)
+      newValue = arg2;
+    } else if (arg1 && typeof arg1 === 'object' && arg1.target) {
+      // Signature: (event)
+      const target = arg1.target;
+      newValue = target.type === 'checkbox' ? target.checked : target.value;
+    } else {
+      newValue = arg1;
+    }
+
+    handlePropChange(propToUpdate.name, newValue);
+  };
+
   const runTestHarness = async (comp: ComponentMetadata, defaults: Record<string, any>) => {
     setIsTesting(true);
     const results: Record<string, { status: 'pass' | 'fail', message?: string }> = {};
@@ -398,36 +424,12 @@ const EmeraldComponentsPage: React.FC = () => {
                   }
                 });
 
-                // Bidirectional sync: Update state when preview component is interacted with
-                const handleChange = (arg1: any, arg2?: any) => {
-                  const propToUpdate = selectedComponent.props.find(p => p.name === 'checked' || p.name === 'selected' || p.name === 'value');
-                  if (!propToUpdate) return;
-
-                  let newValue: any;
-
-                  // Component-specific heuristics for onChange signatures
-                  if (selectedComponent.id.includes('switch') || selectedComponent.id.includes('checkbox')) {
-                    // Signature: (checked/selected, event)
-                    newValue = arg1;
-                  } else if (selectedComponent.id.includes('dropdown') || selectedComponent.id.includes('select')) {
-                    // Signature: (event, value)
-                    newValue = arg2;
-                  } else if (arg1?.target) {
-                    // Signature: (event)
-                    newValue = arg1.target.type === 'checkbox' ? arg1.target.checked : arg1.target.value;
-                  } else {
-                    newValue = arg1;
-                  }
-
-                  handlePropChange(propToUpdate.name, newValue);
-                };
-
                 const childrenProp = selectedComponent.props.find(p => p.name === 'children');
                 const children = childrenProp
                   ? currentProps.children ?? childrenProp.defaultValue
                   : null;
 
-                return <Comp {...validProps} onChange={handleChange}>{children}</Comp>;
+                return <Comp {...validProps} onChange={handlePreviewChange}>{children}</Comp>;
               })()}
             </ComponentErrorBoundary>
           </div>
