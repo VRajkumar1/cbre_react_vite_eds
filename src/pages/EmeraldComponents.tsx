@@ -300,6 +300,23 @@ const EmeraldComponentsPage: React.FC = () => {
     );
   };
 
+  const generateCodeSnippet = () => {
+    const propsString = Object.entries(currentProps)
+      .filter(([key, value]) => {
+        const propMeta = selectedComponent.props.find(p => p.name === key);
+        return value !== propMeta?.defaultValue; // Only show non-default props
+      })
+      .map(([key, value]) => {
+        if (typeof value === 'string') return `${key}="${value}"`;
+        if (typeof value === 'boolean') return value ? key : '';
+        return `${key}={${JSON.stringify(value)}}`;
+      })
+      .filter(Boolean)
+      .join('\n  ');
+
+    return `import { ${selectedComponent.name} } from "@emerald-react/${selectedComponent.id.replace('emerald-', '')}";\n\n<${selectedComponent.name}\n  ${propsString}\n/>`;
+  };
+
   return (
     <div className="emerald-page-layout">
       {/* Sidebar Area */}
