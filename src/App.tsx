@@ -33,6 +33,7 @@ function AppContent() {
   const handleNavMouseEnter = () => {
     if (!navPinned) {
       setNavExpanded(true);
+      setCodedComponentsExpanded(true);
     }
   };
 
@@ -46,6 +47,7 @@ function AppContent() {
     setNavPinned(!navPinned);
     if (!navPinned) {
       setNavExpanded(true);
+      setCodedComponentsExpanded(true);
     }
   };
 
