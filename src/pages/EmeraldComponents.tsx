@@ -222,7 +222,7 @@ const EmeraldComponentsPage: React.FC = () => {
     [selectedComponentId]
   );
 
-  // Initialize props when component changes
+  // Initialize props when component changes or registry is updated
   useEffect(() => {
     const defaults: Record<string, any> = {};
     selectedComponent.props.forEach(p => {
@@ -230,10 +230,10 @@ const EmeraldComponentsPage: React.FC = () => {
     });
     setCurrentProps(defaults);
     setTestResults({});
-    
+
     // Auto-run test harness on selection
     runTestHarness(selectedComponent, defaults);
-  }, [selectedComponent]);
+  }, [selectedComponent.id, selectedComponent.props]); // Dependency on props ensures refresh if metadata changes
 
   const filteredComponents = useMemo(() => {
     return COMPONENT_REGISTRY.filter(c => {
