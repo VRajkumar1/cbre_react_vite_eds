@@ -9,6 +9,7 @@ import "./App.css";
 function AppContent() {
   const [navExpanded, setNavExpanded] = useState(false);
   const [navPinned, setNavPinned] = useState(false);
+  const [codedComponentsExpanded, setCodedComponentsExpanded] = useState(false);
   const location = useLocation();
 
   const navItems = [
