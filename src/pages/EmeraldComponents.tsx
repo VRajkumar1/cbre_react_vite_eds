@@ -511,6 +511,13 @@ const EmeraldComponentsPage: React.FC = () => {
         .preview-header {
           display: flex;
           align-items: center;
+          justify-content: space-between;
+          gap: 16px;
+        }
+
+        .title-section {
+          display: flex;
+          align-items: center;
           gap: 16px;
         }
 
@@ -518,6 +525,12 @@ const EmeraldComponentsPage: React.FC = () => {
           margin: 0;
           font-size: 32px;
           color: #1A1A1A;
+        }
+
+        .testing-indicator {
+          font-size: 14px;
+          color: #5A5A5A;
+          font-style: italic;
         }
 
         .preview-workspace {
