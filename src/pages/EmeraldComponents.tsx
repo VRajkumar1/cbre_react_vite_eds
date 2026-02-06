@@ -280,26 +280,6 @@ const EmeraldComponentsPage: React.FC = () => {
     setIsTesting(false);
   };
 
-  // Render component with filtered props to avoid passing invalid props to native elements
-  const renderComponent = () => {
-    const validProps: Record<string, any> = {};
-    selectedComponent.props.forEach(p => {
-      if (p.name !== 'children') {
-        validProps[p.name] = currentProps[p.name] ?? p.defaultValue;
-      }
-    });
-
-    const children = selectedComponent.props.find(p => p.name === 'children')
-      ? currentProps.children ?? selectedComponent.props.find(p => p.name === 'children')?.defaultValue
-      : null;
-
-    return (
-      <selectedComponent.component {...validProps}>
-        {children}
-      </selectedComponent.component>
-    );
-  };
-
   const generateCodeSnippet = () => {
     const propsString = Object.entries(currentProps)
       .filter(([key, value]) => {
@@ -395,7 +375,32 @@ const EmeraldComponentsPage: React.FC = () => {
                 setCurrentProps(defaults);
               }}
             >
-              {renderComponent()}
+              {(() => {
+                const Comp = selectedComponent.component;
+                const validProps: Record<string, any> = {};
+                selectedComponent.props.forEach(p => {
+                  if (p.name !== 'children') {
+                    validProps[p.name] = currentProps[p.name] !== undefined ? currentProps[p.name] : p.defaultValue;
+                  }
+                });
+
+                // Bidirectional sync: Update state when preview component is interacted with
+                const handleChange = (e: any, value?: any) => {
+                  // Find which prop to update (usually 'value' or 'checked')
+                  const propToUpdate = selectedComponent.props.find(p => p.name === 'checked' || p.name === 'value');
+                  if (propToUpdate) {
+                    const newValue = value !== undefined ? value : (typeof e === 'boolean' ? e : (e?.target ? (e.target.type === 'checkbox' ? e.target.checked : e.target.value) : e));
+                    handlePropChange(propToUpdate.name, newValue);
+                  }
+                };
+
+                const childrenProp = selectedComponent.props.find(p => p.name === 'children');
+                const children = childrenProp
+                  ? currentProps.children ?? childrenProp.defaultValue
+                  : null;
+
+                return <Comp {...validProps} onChange={handleChange}>{children}</Comp>;
+              })()}
             </ComponentErrorBoundary>
           </div>
         </section>
