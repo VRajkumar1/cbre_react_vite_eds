@@ -9,7 +9,7 @@ import "./App.css";
 function AppContent() {
   const [navExpanded, setNavExpanded] = useState(false);
   const [navPinned, setNavPinned] = useState(false);
-  const [codedComponentsExpanded, setCodedComponentsExpanded] = useState(false);
+  const [codedComponentsExpanded, setCodedComponentsExpanded] = useState(true);
   const location = useLocation();
 
   const navItems = [
@@ -113,7 +113,7 @@ function AppContent() {
           })}
 
           {/* Coded Components with submenu */}
-          {navExpanded && <div className="nav-divider"></div>}
+          <div className="nav-divider"></div>
 
           <div
             className="nav-item nav-item-expandable"
