@@ -319,14 +319,14 @@ const EmeraldComponentsPage: React.FC = () => {
             <span>All</span>
             <span className="category-count">{COMPONENT_REGISTRY.length}</span>
           </div>
-          {CATEGORIES.map(cat => (
+          {CATEGORIES.filter(cat => categoryCounts[cat] > 0).map(cat => (
             <div
               key={cat}
               className={`category-item ${selectedCategory === cat ? 'active' : ''}`}
               onClick={() => setSelectedCategory(cat)}
             >
               <span>{cat}</span>
-              <span className="category-count">{categoryCounts[cat] || 0}</span>
+              <span className="category-count">{categoryCounts[cat]}</span>
             </div>
           ))}
         </div>
