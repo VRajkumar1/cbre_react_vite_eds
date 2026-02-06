@@ -108,6 +108,7 @@ const COMPONENT_REGISTRY: ComponentMetadata[] = [
     props: [
       { name: 'label', type: 'string', defaultValue: 'Toggle me' },
       { name: 'selected', type: 'boolean', defaultValue: false },
+      { name: 'labelPosition', type: 'enum', defaultValue: 'right', options: ['left', 'right'] },
       { name: 'disabled', type: 'boolean', defaultValue: false },
     ]
   },
