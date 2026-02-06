@@ -284,18 +284,31 @@ const EmeraldComponentsPage: React.FC = () => {
   const generateCodeSnippet = () => {
     const propsString = Object.entries(currentProps)
       .filter(([key, value]) => {
+        if (key === 'children') return false; // Handle children separately
         const propMeta = selectedComponent.props.find(p => p.name === key);
         return value !== propMeta?.defaultValue; // Only show non-default props
       })
       .map(([key, value]) => {
         if (typeof value === 'string') return `${key}="${value}"`;
         if (typeof value === 'boolean') return value ? key : '';
-        return `${key}={${JSON.stringify(value)}}`;
+        try {
+          return `${key}={${JSON.stringify(value)}}`;
+        } catch (e) {
+          return `${key}={/* complex value */}`;
+        }
       })
       .filter(Boolean)
       .join('\n  ');
 
-    return `import { ${selectedComponent.name} } from "@emerald-react/${selectedComponent.id.replace('emerald-', '')}";\n\n<${selectedComponent.name}\n  ${propsString}\n/>`;
+    const children = currentProps.children;
+    const hasChildren = children !== undefined && children !== null;
+
+    if (hasChildren) {
+      const childrenContent = typeof children === 'string' ? `\n  ${children}\n` : '\n  {/* children content */}\n';
+      return `import { ${selectedComponent.name} } from "@emerald-react/${selectedComponent.id.replace('emerald-', '')}";\n\n<${selectedComponent.name}${propsString ? '\n  ' + propsString : ''}>${childrenContent}</${selectedComponent.name}>`;
+    }
+
+    return `import { ${selectedComponent.name} } from "@emerald-react/${selectedComponent.id.replace('emerald-', '')}";\n\n<${selectedComponent.name}${propsString ? '\n  ' + propsString : ''}\n/>`;
   };
 
   return (
