@@ -10,7 +10,7 @@ import { EmeraldIcon } from "@emerald-react/icon";
 import { EmeraldDropdown } from "@emerald-react/dropdown";
 import { EmeraldAccordionGroup, EmeraldAccordion } from "@emerald-react/accordion-group";
 import { EmeraldCard } from "@emerald-react/card";
-import { EmeraldTabGroup, EmeraldTabBar, EmeraldTab, EmeraldTabContent } from "@emerald-react/tab-group";
+import { EmeraldTabGroup, EmeraldTabBar, EmeraldTab } from "@emerald-react/tab-group";
 
 // --- Types & Registry ---
 
