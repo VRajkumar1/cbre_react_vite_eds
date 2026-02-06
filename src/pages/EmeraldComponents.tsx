@@ -14,7 +14,7 @@ import { EmeraldTabGroup, EmeraldTabBar, EmeraldTab } from "@emerald-react/tab-g
 import { EmeraldModal } from "@emerald-react/modal";
 import { EmeraldTooltip } from "@emerald-react/tooltip";
 import { EmeraldAvatar } from "@emerald-react/avatar";
-import { EmeraldProgressIndicator } from "@emerald-react/progress-indicator";
+import { ProgressIndicator } from "@emerald-react/progress-indicator";
 import { EmeraldBreadcrumb } from "@emerald-react/breadcrumb";
 import { EmeraldIconButton } from "@emerald-react/icon-button";
 import { EmeraldButtonGroup } from "@emerald-react/button-group";
@@ -251,7 +251,7 @@ const COMPONENT_REGISTRY: ComponentMetadata[] = [
     id: 'emerald-progress-indicator',
     name: 'EmeraldProgressIndicator',
     category: 'Progress & Status',
-    component: EmeraldProgressIndicator,
+    component: ProgressIndicator,
     props: [
       { name: 'variant', type: 'enum', defaultValue: 'bar', options: ['bar', 'spinner'] },
       { name: 'value', type: 'number', defaultValue: 50 },
