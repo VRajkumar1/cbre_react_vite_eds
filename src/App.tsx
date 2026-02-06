@@ -144,14 +144,14 @@ function AppContent() {
             <>
               <Link
                 to="/coded-components/emerald"
-                className="nav-item nav-sub-item"
+                className={`nav-item nav-sub-item ${location.pathname === '/coded-components/emerald' ? 'selected' : ''}`}
                 style={{ textDecoration: 'none' }}
               >
                 <div className="nav-label">Emerald</div>
               </Link>
               <Link
                 to="/coded-components/custom"
-                className="nav-item nav-sub-item"
+                className={`nav-item nav-sub-item ${location.pathname === '/coded-components/custom' ? 'selected' : ''}`}
                 style={{ textDecoration: 'none' }}
               >
                 <div className="nav-label">Custom</div>
