@@ -4,6 +4,7 @@ import { EmeraldIconButton } from "@emerald-react/icon-button";
 import Dashboard from "./pages/Dashboard";
 import Instruments from "./pages/Instruments";
 import Requests from "./pages/Requests";
+import EmeraldComponents from "./pages/EmeraldComponents";
 import "./App.css";
 
 function AppContent() {
@@ -183,6 +184,7 @@ function AppContent() {
         <Route path="/" element={<Dashboard />} />
         <Route path="/instruments" element={<Instruments />} />
         <Route path="/requests" element={<Requests />} />
+        <Route path="/coded-components/emerald" element={<EmeraldComponents />} />
       </Routes>
     </div>
   );
