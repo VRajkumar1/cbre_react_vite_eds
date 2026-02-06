@@ -175,6 +175,42 @@ const COMPONENT_REGISTRY: ComponentMetadata[] = [
       { name: 'iconPosition', type: 'enum', defaultValue: 'left', options: ['left', 'top'] },
       { name: 'showArrows', type: 'boolean', defaultValue: false },
     ]
+  },
+  {
+    id: 'emerald-icon',
+    name: 'EmeraldIcon',
+    category: 'Data Display',
+    component: EmeraldIcon,
+    props: [
+      { name: 'icon', type: 'string', defaultValue: 'star' },
+      { name: 'color', type: 'string', defaultValue: '#003F2D' },
+      { name: 'size', type: 'number', defaultValue: 24 },
+    ]
+  },
+  {
+    id: 'emerald-label',
+    name: 'EmeraldLabel',
+    category: 'Form Controls',
+    component: EmeraldLabel,
+    props: [
+      { name: 'children', type: 'string', defaultValue: 'Label Text' },
+      { name: 'required', type: 'boolean', defaultValue: false },
+      { name: 'disabled', type: 'boolean', defaultValue: false },
+      { name: 'error', type: 'boolean', defaultValue: false },
+    ]
+  },
+  {
+    id: 'emerald-dropdown',
+    name: 'EmeraldDropdown',
+    category: 'Form Controls',
+    component: EmeraldDropdown,
+    props: [
+      { name: 'label', type: 'string', defaultValue: 'Select Option' },
+      { name: 'options', type: 'object', defaultValue: [{ label: 'Option 1', value: '1' }, { label: 'Option 2', value: '2' }] },
+      { name: 'placeholder', type: 'string', defaultValue: 'Choose...' },
+      { name: 'disabled', type: 'boolean', defaultValue: false },
+      { name: 'required', type: 'boolean', defaultValue: false },
+    ]
   }
 ];
 
