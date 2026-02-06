@@ -107,7 +107,7 @@ const COMPONENT_REGISTRY: ComponentMetadata[] = [
     component: EmeraldSwitch,
     props: [
       { name: 'label', type: 'string', defaultValue: 'Toggle me' },
-      { name: 'checked', type: 'boolean', defaultValue: false },
+      { name: 'selected', type: 'boolean', defaultValue: false },
       { name: 'disabled', type: 'boolean', defaultValue: false },
     ]
   },
@@ -386,8 +386,8 @@ const EmeraldComponentsPage: React.FC = () => {
 
                 // Bidirectional sync: Update state when preview component is interacted with
                 const handleChange = (e: any, value?: any) => {
-                  // Find which prop to update (usually 'value' or 'checked')
-                  const propToUpdate = selectedComponent.props.find(p => p.name === 'checked' || p.name === 'value');
+                  // Find which prop to update (usually 'value', 'checked', or 'selected')
+                  const propToUpdate = selectedComponent.props.find(p => p.name === 'checked' || p.name === 'selected' || p.name === 'value');
                   if (propToUpdate) {
                     const newValue = value !== undefined ? value : (typeof e === 'boolean' ? e : (e?.target ? (e.target.type === 'checkbox' ? e.target.checked : e.target.value) : e));
                     handlePropChange(propToUpdate.name, newValue);
@@ -423,8 +423,8 @@ const EmeraldComponentsPage: React.FC = () => {
                   <div className="prop-control">
                     {prop.type === 'boolean' && (
                       <EmeraldSwitch
-                        checked={currentProps[prop.name]}
-                        onChange={(checked: boolean) => handlePropChange(prop.name, checked)}
+                        selected={!!currentProps[prop.name]}
+                        onChange={(selected: boolean) => handlePropChange(prop.name, selected)}
                       />
                     )}
                     {prop.type === 'string' && (
