@@ -320,7 +320,7 @@ const EmeraldComponentsPage: React.FC = () => {
             <EmeraldBadge variant="neutral">{COMPONENT_REGISTRY.length}</EmeraldBadge>
           </div>
           {CATEGORIES.map(cat => (
-            <div 
+            <div
               key={cat}
               className={`category-item ${selectedCategory === cat ? 'active' : ''}`}
               onClick={() => setSelectedCategory(cat)}
@@ -330,8 +330,6 @@ const EmeraldComponentsPage: React.FC = () => {
             </div>
           ))}
         </div>
-
-        <EmeraldDivider />
 
         <div className="component-list">
           {filteredComponents.map(comp => (
@@ -457,11 +455,13 @@ const EmeraldComponentsPage: React.FC = () => {
           border-right: 1px solid rgba(0, 63, 45, 0.15);
           display: flex;
           flex-direction: column;
-          overflow-y: auto;
+          height: 100%;
+          overflow: hidden;
         }
 
         .sidebar-header {
           padding: 24px 16px;
+          flex-shrink: 0;
         }
 
         .sidebar-header h2 {
@@ -472,6 +472,8 @@ const EmeraldComponentsPage: React.FC = () => {
 
         .category-list {
           padding: 8px 0;
+          flex-shrink: 0;
+          border-bottom: 1px solid rgba(0, 63, 45, 0.15);
         }
 
         .category-item {
@@ -497,7 +499,8 @@ const EmeraldComponentsPage: React.FC = () => {
 
         .component-list {
           flex: 1;
-          padding: 16px 0;
+          padding: 8px 0;
+          overflow-y: auto;
         }
 
         .component-list-item {
