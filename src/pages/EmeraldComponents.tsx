@@ -216,6 +216,86 @@ const COMPONENT_REGISTRY: ComponentMetadata[] = [
       { name: 'disabled', type: 'boolean', defaultValue: false },
       { name: 'required', type: 'boolean', defaultValue: false },
     ]
+  },
+  {
+    id: 'emerald-avatar',
+    name: 'EmeraldAvatar',
+    category: 'Data Display',
+    component: EmeraldAvatar,
+    props: [
+      { name: 'name', type: 'string', defaultValue: 'John Doe' },
+      { name: 'variant', type: 'enum', defaultValue: 'circular', options: ['circular', 'rounded', 'square'] },
+      { name: 'size', type: 'enum', defaultValue: 'medium', options: ['small', 'medium', 'large'] },
+    ]
+  },
+  {
+    id: 'emerald-tooltip',
+    name: 'EmeraldTooltip',
+    category: 'Feedback & Communication',
+    component: (props: any) => (
+      <EmeraldTooltip {...props}>
+        <span style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }}>Hover me</span>
+      </EmeraldTooltip>
+    ),
+    props: [
+      { name: 'content', type: 'string', defaultValue: 'Tooltip content' },
+      { name: 'position', type: 'enum', defaultValue: 'top', options: ['top', 'bottom', 'left', 'right'] },
+    ]
+  },
+  {
+    id: 'emerald-progress-indicator',
+    name: 'EmeraldProgressIndicator',
+    category: 'Progress & Status',
+    component: EmeraldProgressIndicator,
+    props: [
+      { name: 'variant', type: 'enum', defaultValue: 'bar', options: ['bar', 'spinner'] },
+      { name: 'value', type: 'number', defaultValue: 50 },
+      { name: 'size', type: 'enum', defaultValue: 'medium', options: ['small', 'medium', 'large'] },
+    ]
+  },
+  {
+    id: 'emerald-breadcrumb',
+    name: 'EmeraldBreadcrumb',
+    category: 'Navigation',
+    component: (props: any) => (
+      <EmeraldBreadcrumb
+        {...props}
+        items={[
+          { label: 'Home', href: '#' },
+          { label: 'Components', href: '#' },
+          { label: 'Breadcrumb', active: true }
+        ]}
+      />
+    ),
+    props: []
+  },
+  {
+    id: 'emerald-modal',
+    name: 'EmeraldModal',
+    category: 'Feedback & Communication',
+    component: (props: any) => {
+      const [isOpen, setIsOpen] = useState(false);
+      return (
+        <div>
+          <EmeraldButton onClick={() => setIsOpen(true)}>Open Modal</EmeraldButton>
+          <EmeraldModal
+            {...props}
+            open={isOpen}
+            onClose={() => setIsOpen(false)}
+          >
+            <div style={{ padding: '20px' }}>
+              <h3>Modal Content</h3>
+              <p>This is a modal from Emerald Design System.</p>
+              <EmeraldButton onClick={() => setIsOpen(false)}>Close</EmeraldButton>
+            </div>
+          </EmeraldModal>
+        </div>
+      );
+    },
+    props: [
+      { name: 'title', type: 'string', defaultValue: 'Modal Title' },
+      { name: 'size', type: 'enum', defaultValue: 'medium', options: ['small', 'medium', 'large', 'full-screen'] },
+    ]
   }
 ];
 
