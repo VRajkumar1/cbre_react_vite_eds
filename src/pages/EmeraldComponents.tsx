@@ -280,21 +280,24 @@ const EmeraldComponentsPage: React.FC = () => {
     setIsTesting(false);
   };
 
-  const generateCodeSnippet = () => {
-    const propsString = Object.entries(currentProps)
-      .filter(([key, value]) => {
-        const propMeta = selectedComponent.props.find(p => p.name === key);
-        return value !== propMeta?.defaultValue; // Only show non-default props
-      })
-      .map(([key, value]) => {
-        if (typeof value === 'string') return `${key}="${value}"`;
-        if (typeof value === 'boolean') return value ? key : '';
-        return `${key}={${JSON.stringify(value)}}`;
-      })
-      .filter(Boolean)
-      .join('\n  ');
+  // Render component with filtered props to avoid passing invalid props to native elements
+  const renderComponent = () => {
+    const validProps: Record<string, any> = {};
+    selectedComponent.props.forEach(p => {
+      if (p.name !== 'children') {
+        validProps[p.name] = currentProps[p.name] ?? p.defaultValue;
+      }
+    });
 
-    return `import { ${selectedComponent.name} } from "@emerald-react/${selectedComponent.id.replace('emerald-', '')}";\n\n<${selectedComponent.name}\n  ${propsString}\n/>`;
+    const children = selectedComponent.props.find(p => p.name === 'children')
+      ? currentProps.children ?? selectedComponent.props.find(p => p.name === 'children')?.defaultValue
+      : null;
+
+    return (
+      <selectedComponent.component {...validProps}>
+        {children}
+      </selectedComponent.component>
+    );
   };
 
   return (
@@ -367,14 +370,15 @@ const EmeraldComponentsPage: React.FC = () => {
 
         <section className="preview-workspace">
           <div className="component-canvas">
-            <ComponentErrorBoundary onReset={() => {
-              const defaults: Record<string, any> = {};
-              selectedComponent.props.forEach(p => defaults[p.name] = p.defaultValue);
-              setCurrentProps(defaults);
-            }}>
-              <selectedComponent.component {...currentProps}>
-                {currentProps.children}
-              </selectedComponent.component>
+            <ComponentErrorBoundary
+              key={selectedComponent.id}
+              onReset={() => {
+                const defaults: Record<string, any> = {};
+                selectedComponent.props.forEach(p => defaults[p.name] = p.defaultValue);
+                setCurrentProps(defaults);
+              }}
+            >
+              {renderComponent()}
             </ComponentErrorBoundary>
           </div>
         </section>
