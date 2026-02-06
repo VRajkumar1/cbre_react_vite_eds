@@ -305,7 +305,7 @@ const EmeraldComponentsPage: React.FC = () => {
 
     if (hasChildren) {
       const childrenContent = typeof children === 'string' ? `\n  ${children}\n` : '\n  {/* children content */}\n';
-      return `import { ${selectedComponent.name} } from "@emerald-react/${selectedComponent.id.replace('emerald-', '')}";\n\n<${selectedComponent.name}${propsString ? '\n  ' + propsString : ''}>${childrenContent}</${selectedComponent.name}>`;
+      return `import { ${selectedComponent.name} } from "@emerald-react/${selectedComponent.id.replace('emerald-', '')}";\n\n<${selectedComponent.name}${propsString ? '\n  ' + propsString : ''}>\n  ${childrenContent}</${selectedComponent.name}>`;
     }
 
     return `import { ${selectedComponent.name} } from "@emerald-react/${selectedComponent.id.replace('emerald-', '')}";\n\n<${selectedComponent.name}${propsString ? '\n  ' + propsString : ''}\n/>`;
@@ -399,13 +399,27 @@ const EmeraldComponentsPage: React.FC = () => {
                 });
 
                 // Bidirectional sync: Update state when preview component is interacted with
-                const handleChange = (e: any, value?: any) => {
-                  // Find which prop to update (usually 'value', 'checked', or 'selected')
+                const handleChange = (arg1: any, arg2?: any) => {
                   const propToUpdate = selectedComponent.props.find(p => p.name === 'checked' || p.name === 'selected' || p.name === 'value');
-                  if (propToUpdate) {
-                    const newValue = value !== undefined ? value : (typeof e === 'boolean' ? e : (e?.target ? (e.target.type === 'checkbox' ? e.target.checked : e.target.value) : e));
-                    handlePropChange(propToUpdate.name, newValue);
+                  if (!propToUpdate) return;
+
+                  let newValue: any;
+
+                  // Component-specific heuristics for onChange signatures
+                  if (selectedComponent.id.includes('switch') || selectedComponent.id.includes('checkbox')) {
+                    // Signature: (checked/selected, event)
+                    newValue = arg1;
+                  } else if (selectedComponent.id.includes('dropdown') || selectedComponent.id.includes('select')) {
+                    // Signature: (event, value)
+                    newValue = arg2;
+                  } else if (arg1?.target) {
+                    // Signature: (event)
+                    newValue = arg1.target.type === 'checkbox' ? arg1.target.checked : arg1.target.value;
+                  } else {
+                    newValue = arg1;
                   }
+
+                  handlePropChange(propToUpdate.name, newValue);
                 };
 
                 const childrenProp = selectedComponent.props.find(p => p.name === 'children');
