@@ -301,6 +301,86 @@ const COMPONENT_REGISTRY: ComponentMetadata[] = [
       { name: 'title', type: 'string', defaultValue: 'Modal Title' },
       { name: 'size', type: 'enum', defaultValue: 'medium', options: ['small', 'medium', 'large', 'full-screen'] },
     ]
+  },
+  {
+    id: 'emerald-icon-button',
+    name: 'EmeraldIconButton',
+    category: 'Interactive Elements',
+    component: EmeraldIconButton,
+    props: [
+      { name: 'icon', type: 'string', defaultValue: 'star' },
+      { name: 'variant', type: 'enum', defaultValue: 'primary', options: ['primary', 'secondary', 'tertiary', 'ghost'] },
+      { name: 'size', type: 'enum', defaultValue: 'medium', options: ['small', 'medium', 'large'] },
+      { name: 'disabled', type: 'boolean', defaultValue: false },
+    ]
+  },
+  {
+    id: 'emerald-button-group',
+    name: 'EmeraldButtonGroup',
+    category: 'Interactive Elements',
+    component: (props: any) => (
+      <EmeraldButtonGroup {...props}>
+        <EmeraldButton>Left</EmeraldButton>
+        <EmeraldButton>Middle</EmeraldButton>
+        <EmeraldButton>Right</EmeraldButton>
+      </EmeraldButtonGroup>
+    ),
+    props: [
+      { name: 'orientation', type: 'enum', defaultValue: 'horizontal', options: ['horizontal', 'vertical'] },
+      { name: 'fullWidth', type: 'boolean', defaultValue: false },
+    ]
+  },
+  {
+    id: 'emerald-slider',
+    name: 'EmeraldSlider',
+    category: 'Form Controls',
+    component: EmeraldSlider,
+    props: [
+      { name: 'label', type: 'string', defaultValue: 'Slider Label' },
+      { name: 'min', type: 'number', defaultValue: 0 },
+      { name: 'max', type: 'number', defaultValue: 100 },
+      { name: 'step', type: 'number', defaultValue: 1 },
+      { name: 'value', type: 'number', defaultValue: 50 },
+    ]
+  },
+  {
+    id: 'emerald-list',
+    name: 'EmeraldList',
+    category: 'Data Display',
+    component: (props: any) => (
+      <EmeraldList {...props}>
+        <EmeraldListItem>Item 1</EmeraldListItem>
+        <EmeraldListItem>Item 2</EmeraldListItem>
+        <EmeraldListItem>Item 3</EmeraldListItem>
+      </EmeraldList>
+    ),
+    props: [
+      { name: 'dense', type: 'boolean', defaultValue: false },
+    ]
+  },
+  {
+    id: 'emerald-data-table',
+    name: 'EmeraldDataTable',
+    category: 'Data Display',
+    component: (props: any) => (
+      <EmeraldDataTable
+        {...props}
+        columns={[
+          { key: 'id', label: 'ID' },
+          { key: 'name', label: 'Name' },
+          { key: 'role', label: 'Role' }
+        ]}
+        data={[
+          { id: '1', name: 'Alice', role: 'Admin' },
+          { id: '2', name: 'Bob', role: 'User' },
+          { id: '3', name: 'Charlie', role: 'Editor' }
+        ]}
+      />
+    ),
+    props: [
+      { name: 'striped', type: 'boolean', defaultValue: true },
+      { name: 'hoverable', type: 'boolean', defaultValue: true },
+    ]
   }
 ];
 
