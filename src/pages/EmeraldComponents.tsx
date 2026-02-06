@@ -7,7 +7,10 @@ import { EmeraldSwitch } from "@emerald-react/switch";
 import { EmeraldDivider } from "@emerald-react/divider";
 import { EmeraldLabel } from "@emerald-react/label";
 import { EmeraldIcon } from "@emerald-react/icon";
-import { EmeraldSelect } from "@emerald-react/select";
+import { EmeraldDropdown } from "@emerald-react/dropdown";
+import { EmeraldAccordionGroup, EmeraldAccordion } from "@emerald-react/accordion-group";
+import { EmeraldCard } from "@emerald-react/card";
+import { EmeraldTabGroup, EmeraldTabBar, EmeraldTab, EmeraldTabContent } from "@emerald-react/tab-group";
 
 // --- Types & Registry ---
 
@@ -117,6 +120,36 @@ const COMPONENT_REGISTRY: ComponentMetadata[] = [
       { name: 'orientation', type: 'enum', defaultValue: 'horizontal', options: ['horizontal', 'vertical'] },
       { name: 'variant', type: 'enum', defaultValue: 'full-width', options: ['full-width', 'inset', 'middle'] },
       { name: 'thickness', type: 'number', defaultValue: 1 },
+    ]
+  },
+  {
+    id: 'emerald-accordion-group',
+    name: 'EmeraldAccordionGroup',
+    category: 'Content Organization',
+    component: (props: any) => (
+      <EmeraldAccordionGroup {...props}>
+        <EmeraldAccordion label="Accordion 1" id="acc1">
+          Content for accordion 1
+        </EmeraldAccordion>
+        <EmeraldAccordion label="Accordion 2" id="acc2">
+          Content for accordion 2
+        </EmeraldAccordion>
+      </EmeraldAccordionGroup>
+    ),
+    props: [
+      { name: 'multi', type: 'boolean', defaultValue: false },
+    ]
+  },
+  {
+    id: 'emerald-card',
+    name: 'EmeraldCard',
+    category: 'Data Display',
+    component: EmeraldCard,
+    props: [
+      { name: 'children', type: 'string', defaultValue: 'Card Content' },
+      { name: 'title', type: 'string', defaultValue: 'Card Title' },
+      { name: 'subtitle', type: 'string', defaultValue: 'Card Subtitle' },
+      { name: 'outlined', type: 'boolean', defaultValue: true },
     ]
   }
 ];
@@ -354,15 +387,13 @@ const EmeraldComponentsPage: React.FC = () => {
                       />
                     )}
                     {prop.type === 'enum' && prop.options && (
-                      <select 
+                      <EmeraldDropdown
+                        options={prop.options.map(opt => ({ label: opt, value: opt }))}
                         value={currentProps[prop.name]}
-                        onChange={(e) => handlePropChange(prop.name, e.target.value)}
-                        className="custom-select"
-                      >
-                        {prop.options.map(opt => (
-                          <option key={opt} value={opt}>{opt}</option>
-                        ))}
-                      </select>
+                        onChange={(_: any, value: any) => handlePropChange(prop.name, value)}
+                        size="small"
+                        outlined
+                      />
                     )}
                   </div>
                 </div>
