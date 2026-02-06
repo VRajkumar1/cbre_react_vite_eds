@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { EmeraldButton } from "@emerald-react/button";
 import { EmeraldInput } from "@emerald-react/input";
-import { EmeraldInputType, EmeraldBadgeSize, EmeraldBadgeVariant } from "@emerald/nxcore";
+import { EmeraldInputType } from "@emerald/nxcore";
 import { EmeraldIconButton } from "@emerald-react/icon-button";
-import { EmeraldBadge } from "@emerald-react/badge";
 import "./App.css";
 
 function App() {
@@ -88,146 +87,155 @@ function App() {
         </div>
       </aside>
 
-      {/* Main Left Panel */}
-      <main className="main-left">
-        <div className="panel-header">
-          <h1 className="panel-title">Instruments</h1>
-          <EmeraldButton
-            label="Add Instrument"
-            variant="Primary"
-            leftIcon="add"
-            size="Medium"
-          />
+      {/* Main Wrap - contains page header and body */}
+      <div className="main-wrap">
+        {/* Page Header - Full Width */}
+        <div className="page-header">
+          <div className="panel-header">
+            <h1 className="panel-title">Instruments</h1>
+            <EmeraldButton
+              label="Add Instrument"
+              variant="Primary"
+              leftIcon="add"
+              size="Medium"
+            />
+          </div>
+
+          {/* Status Metrics */}
+          <div className="status-metrics">
+            {statusMetrics.map((metric, index) => (
+              <div 
+                key={index} 
+                className={`metric-item metric-${metric.color} ${metric.active ? 'metric-active' : ''}`}
+              >
+                <div className="metric-count">{metric.count}</div>
+                <div className="metric-label">{metric.label}</div>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Status Metrics */}
-        <div className="status-metrics">
-          {statusMetrics.map((metric, index) => (
-            <div 
-              key={index} 
-              className={`metric-item metric-${metric.color} ${metric.active ? 'metric-active' : ''}`}
-            >
-              <div className="metric-count">{metric.count}</div>
-              <div className="metric-label">{metric.label}</div>
+        {/* Page Body - Table and Details Pane Side by Side */}
+        <div className="page-body">
+          {/* Table Container */}
+          <div className="table-container">
+            {/* Search and Actions */}
+            <div className="search-actions">
+              <div className="search-container">
+                <EmeraldInput
+                  type={EmeraldInputType.Search}
+                  placeholder="Search by Instrument ID"
+                  value={searchValue}
+                  onChange={(event, value) => setSearchValue(value as string)}
+                  outlined
+                />
+              </div>
+              <div className="action-buttons">
+                <EmeraldIconButton icon="view_column" type="Icon" title="Manage columns" />
+                <EmeraldIconButton icon="density_medium" type="Icon" title="Compact rows" />
+                <EmeraldIconButton icon="filter_alt" type="Icon" title="Filter" />
+                <EmeraldIconButton icon="download" type="Icon" title="Download as CSV" />
+              </div>
             </div>
-          ))}
-        </div>
 
-        {/* Search and Actions */}
-        <div className="search-actions">
-          <div className="search-container">
-            <EmeraldInput
-              type={EmeraldInputType.Search}
-              placeholder="Search by Instrument ID"
-              value={searchValue}
-              onChange={(event, value) => setSearchValue(value as string)}
-              outlined
-            />
-          </div>
-          <div className="action-buttons">
-            <EmeraldIconButton icon="view_column" type="Icon" title="Manage columns" />
-            <EmeraldIconButton icon="density_medium" type="Icon" title="Compact rows" />
-            <EmeraldIconButton icon="filter_alt" type="Icon" title="Filter" />
-            <EmeraldIconButton icon="download" type="Icon" title="Download as CSV" />
-          </div>
-        </div>
-
-        {/* Scrollable List */}
-        <div className="scrollable-list">
-          {Array.from({ length: 20 }, (_, i) => (
-            <div key={i} className="list-item">
-              Scrollable content in here
+            {/* Scrollable List */}
+            <div className="scrollable-list">
+              {Array.from({ length: 20 }, (_, i) => (
+                <div key={i} className="list-item">
+                  Scrollable content in here
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
 
-        {/* Pagination */}
-        <div className="pagination">
-          <div className="pagination-info">
-            <span>Records</span>
-            <span style={{ color: '#1A1A1A' }}>1-5 of 256</span>
-            <span className="pagination-dot"></span>
-            <span>Per Page</span>
-            <select className="page-size-select">
-              <option>25</option>
-              <option>50</option>
-              <option>100</option>
-            </select>
-          </div>
-          <div className="pagination-controls">
-            <EmeraldIconButton 
-              icon="first_page" 
-              type="Icon" 
-              size="Small"
-              disabled
-              title="First page"
-            />
-            <EmeraldIconButton 
-              icon="chevron_left" 
-              type="Icon" 
-              size="Small"
-              disabled
-              title="Previous page"
-            />
-            <select className="page-selector">
-              <option>1</option>
-            </select>
-            <span style={{ color: '#1A1A1A' }}>of</span>
-            <span style={{ color: '#1A1A1A' }}>1</span>
-            <span style={{ color: '#1A1A1A' }}>pages</span>
-            <EmeraldIconButton 
-              icon="chevron_right" 
-              type="Icon" 
-              size="Small"
-              disabled
-              title="Next page"
-            />
-            <EmeraldIconButton 
-              icon="last_page" 
-              type="Icon" 
-              size="Small"
-              disabled
-              title="Last page"
-            />
-          </div>
-        </div>
-      </main>
-
-      {/* Main Right Panel */}
-      <aside className="main-right">
-        <div className="details-header">
-          <h2 className="details-title">Details pane</h2>
-          <div className="status-badge">
-            <div style={{
-              width: '12px',
-              height: '12px',
-              borderRadius: '50%',
-              backgroundColor: '#50AF78'
-            }}></div>
-            <span className="status-text">Active</span>
-          </div>
-        </div>
-
-        <div className="details-actions">
-          <EmeraldButton
-            label="New request"
-            variant="Light"
-            leftIcon="add"
-            rightIcon="arrow_drop_down"
-            size="Medium"
-            style={{ flex: 1 }}
-          />
-        </div>
-
-        {/* Scrollable Details */}
-        <div className="scrollable-details">
-          {Array.from({ length: 20 }, (_, i) => (
-            <div key={i} className="detail-item">
-              Scrollable content in here
+            {/* Pagination */}
+            <div className="pagination">
+              <div className="pagination-info">
+                <span>Records</span>
+                <span style={{ color: '#1A1A1A' }}>1-5 of 256</span>
+                <span className="pagination-dot"></span>
+                <span>Per Page</span>
+                <select className="page-size-select">
+                  <option>25</option>
+                  <option>50</option>
+                  <option>100</option>
+                </select>
+              </div>
+              <div className="pagination-controls">
+                <EmeraldIconButton 
+                  icon="first_page" 
+                  type="Icon" 
+                  size="Small"
+                  disabled
+                  title="First page"
+                />
+                <EmeraldIconButton 
+                  icon="chevron_left" 
+                  type="Icon" 
+                  size="Small"
+                  disabled
+                  title="Previous page"
+                />
+                <select className="page-selector">
+                  <option>1</option>
+                </select>
+                <span style={{ color: '#1A1A1A' }}>of</span>
+                <span style={{ color: '#1A1A1A' }}>1</span>
+                <span style={{ color: '#1A1A1A' }}>pages</span>
+                <EmeraldIconButton 
+                  icon="chevron_right" 
+                  type="Icon" 
+                  size="Small"
+                  disabled
+                  title="Next page"
+                />
+                <EmeraldIconButton 
+                  icon="last_page" 
+                  type="Icon" 
+                  size="Small"
+                  disabled
+                  title="Last page"
+                />
+              </div>
             </div>
-          ))}
+          </div>
+
+          {/* Details Pane */}
+          <div className="details-pane">
+            <div className="details-header">
+              <h2 className="details-title">Details pane</h2>
+              <div className="status-badge">
+                <div style={{
+                  width: '12px',
+                  height: '12px',
+                  borderRadius: '50%',
+                  backgroundColor: '#50AF78'
+                }}></div>
+                <span className="status-text">Active</span>
+              </div>
+            </div>
+
+            <div className="details-actions">
+              <EmeraldButton
+                label="New request"
+                variant="Light"
+                leftIcon="add"
+                rightIcon="arrow_drop_down"
+                size="Medium"
+                style={{ flex: 1 }}
+              />
+            </div>
+
+            {/* Scrollable Details */}
+            <div className="scrollable-details">
+              {Array.from({ length: 20 }, (_, i) => (
+                <div key={i} className="detail-item">
+                  Scrollable content in here
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-      </aside>
+      </div>
     </div>
   );
 }
