@@ -497,6 +497,12 @@ const EmeraldComponentsPage: React.FC = () => {
           font-weight: 500;
         }
 
+        .category-count {
+          font-size: 12px;
+          color: rgba(26, 26, 26, 0.65);
+          font-weight: 400;
+        }
+
         .component-list {
           flex: 1;
           padding: 8px 0;
