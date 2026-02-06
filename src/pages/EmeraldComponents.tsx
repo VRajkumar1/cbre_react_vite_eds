@@ -97,7 +97,7 @@ const COMPONENT_REGISTRY: ComponentMetadata[] = [
       { name: 'checked', type: 'boolean', defaultValue: false },
       { name: 'disabled', type: 'boolean', defaultValue: false },
       { name: 'required', type: 'boolean', defaultValue: false },
-      { name: 'error', type: 'boolean', defaultValue: false },
+      { name: 'indeterminate', type: 'boolean', defaultValue: false },
     ]
   },
   {
