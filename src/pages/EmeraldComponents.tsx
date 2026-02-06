@@ -110,6 +110,8 @@ const COMPONENT_REGISTRY: ComponentMetadata[] = [
       { name: 'selected', type: 'boolean', defaultValue: false },
       { name: 'labelPosition', type: 'enum', defaultValue: 'right', options: ['left', 'right'] },
       { name: 'disabled', type: 'boolean', defaultValue: false },
+      { name: 'smallSize', type: 'boolean', defaultValue: false },
+      { name: 'showThumbIcon', type: 'boolean', defaultValue: false },
     ]
   },
   {
