@@ -312,12 +312,12 @@ const EmeraldComponentsPage: React.FC = () => {
         </div>
 
         <div className="category-list">
-          <div 
+          <div
             className={`category-item ${!selectedCategory ? 'active' : ''}`}
             onClick={() => setSelectedCategory(null)}
           >
             <span>All</span>
-            <EmeraldBadge variant="neutral">{COMPONENT_REGISTRY.length}</EmeraldBadge>
+            <span className="category-count">{COMPONENT_REGISTRY.length}</span>
           </div>
           {CATEGORIES.map(cat => (
             <div
@@ -326,7 +326,7 @@ const EmeraldComponentsPage: React.FC = () => {
               onClick={() => setSelectedCategory(cat)}
             >
               <span>{cat}</span>
-              <EmeraldBadge variant="neutral">{categoryCounts[cat] || 0}</EmeraldBadge>
+              <span className="category-count">{categoryCounts[cat] || 0}</span>
             </div>
           ))}
         </div>
