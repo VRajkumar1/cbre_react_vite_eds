@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { EmeraldButton } from "@emerald-react/button";
 import { EmeraldInput } from "@emerald-react/input";
-import { EmeraldInputType } from "@emerald/nxcore";
+import { EmeraldInputType, EmeraldBadgeSize, EmeraldBadgeVariant } from "@emerald/nxcore";
 import { EmeraldIconButton } from "@emerald-react/icon-button";
-import { EmeraldBadge, EmeraldBadgeSize, EmeraldBadgeVariant } from "@emerald-react/badge";
+import { EmeraldBadge } from "@emerald-react/badge";
 import "./App.css";
 
 function App() {
