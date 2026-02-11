@@ -50,6 +50,7 @@ const CATEGORIES = [
   'Data Display',
   'Interactive Elements',
   'Feedback & Communication',
+  'Content Organization',
   'Progress & Status',
   'Specialized'
 ];
@@ -61,12 +62,13 @@ const COMPONENT_REGISTRY: ComponentMetadata[] = [
     category: 'Interactive Elements',
     component: EmeraldButton,
     props: [
-      { name: 'children', type: 'string', defaultValue: 'Click Me' },
-      { name: 'variant', type: 'enum', defaultValue: 'primary', options: ['primary', 'secondary', 'tertiary', 'ghost', 'danger'] },
-      { name: 'size', type: 'enum', defaultValue: 'medium', options: ['small', 'medium', 'large'] },
+      { name: 'label', type: 'string', defaultValue: 'Click Me' },
+      { name: 'variant', type: 'enum', defaultValue: 'Primary', options: ['Primary', 'Secondary', 'TextButton', 'Light', 'Custom'] },
+      { name: 'size', type: 'enum', defaultValue: 'Medium', options: ['Small', 'Medium', 'Large'] },
       { name: 'disabled', type: 'boolean', defaultValue: false },
-      { name: 'loading', type: 'boolean', defaultValue: false },
+      { name: 'showSpinner', type: 'boolean', defaultValue: false },
       { name: 'fullWidth', type: 'boolean', defaultValue: false },
+      { name: 'danger', type: 'boolean', defaultValue: false },
     ]
   },
   {
@@ -75,10 +77,11 @@ const COMPONENT_REGISTRY: ComponentMetadata[] = [
     category: 'Data Display',
     component: EmeraldBadge,
     props: [
-      { name: 'children', type: 'string', defaultValue: 'Badge' },
-      { name: 'variant', type: 'enum', defaultValue: 'default', options: ['default', 'success', 'warning', 'error', 'info', 'neutral'] },
-      { name: 'size', type: 'enum', defaultValue: 'medium', options: ['small', 'medium'] },
-      { name: 'pill', type: 'boolean', defaultValue: false },
+      { name: 'badgeCount', type: 'string', defaultValue: '5' },
+      { name: 'variant', type: 'enum', defaultValue: 'numbered', options: ['dot', 'numbered'] },
+      { name: 'size', type: 'enum', defaultValue: 'medium', options: ['small', 'medium', 'large'] },
+      { name: 'title', type: 'string', defaultValue: '5 notifications' },
+      { name: 'disabled', type: 'boolean', defaultValue: false },
     ]
   },
   {
@@ -92,9 +95,11 @@ const COMPONENT_REGISTRY: ComponentMetadata[] = [
       { name: 'value', type: 'string', defaultValue: '' },
       { name: 'disabled', type: 'boolean', defaultValue: false },
       { name: 'required', type: 'boolean', defaultValue: false },
-      { name: 'error', type: 'string', defaultValue: '' },
+      { name: 'errorText', type: 'string', defaultValue: '' },
       { name: 'helperText', type: 'string', defaultValue: '' },
-      { name: 'type', type: 'enum', defaultValue: 'text', options: ['text', 'password', 'email', 'number', 'tel'] },
+      { name: 'type', type: 'enum', defaultValue: 'text', options: ['text', 'password', 'email', 'number', 'tel', 'search', 'textarea'] },
+      { name: 'outlined', type: 'boolean', defaultValue: true },
+      { name: 'inputSize', type: 'enum', defaultValue: 'medium', options: ['small', 'medium', 'large'] },
     ]
   },
   {
@@ -108,6 +113,7 @@ const COMPONENT_REGISTRY: ComponentMetadata[] = [
       { name: 'disabled', type: 'boolean', defaultValue: false },
       { name: 'required', type: 'boolean', defaultValue: false },
       { name: 'indeterminate', type: 'boolean', defaultValue: false },
+      { name: 'caption', type: 'string', defaultValue: '' },
     ]
   },
   {
@@ -141,16 +147,16 @@ const COMPONENT_REGISTRY: ComponentMetadata[] = [
     category: 'Content Organization',
     component: (props: any) => (
       <EmeraldAccordionGroup {...props}>
-        <EmeraldAccordion label="Accordion 1" id="acc1">
+        <EmeraldAccordion title="Accordion 1" id="acc1">
           Content for accordion 1
         </EmeraldAccordion>
-        <EmeraldAccordion label="Accordion 2" id="acc2">
+        <EmeraldAccordion title="Accordion 2" id="acc2">
           Content for accordion 2
         </EmeraldAccordion>
       </EmeraldAccordionGroup>
     ),
     props: [
-      { name: 'multi', type: 'boolean', defaultValue: false },
+      { name: 'openMultiple', type: 'boolean', defaultValue: true },
     ]
   },
   {
@@ -159,10 +165,10 @@ const COMPONENT_REGISTRY: ComponentMetadata[] = [
     category: 'Data Display',
     component: EmeraldCard,
     props: [
-      { name: 'children', type: 'string', defaultValue: 'Card Content' },
       { name: 'title', type: 'string', defaultValue: 'Card Title' },
-      { name: 'subtitle', type: 'string', defaultValue: 'Card Subtitle' },
-      { name: 'outlined', type: 'boolean', defaultValue: true },
+      { name: 'caption', type: 'string', defaultValue: 'Card Caption' },
+      { name: 'description', type: 'string', defaultValue: 'This is a description of the card content.' },
+      { name: 'variant', type: 'enum', defaultValue: 'default', options: ['default', 'titleOnTop'] },
     ]
   },
   {
@@ -201,12 +207,17 @@ const COMPONENT_REGISTRY: ComponentMetadata[] = [
     id: 'emerald-label',
     name: 'EmeraldLabel',
     category: 'Form Controls',
-    component: EmeraldLabel,
+    component: (props: any) => (
+      <EmeraldLabel {...props}>
+        <input type="text" style={{ padding: '8px', width: '100%', border: '1px solid #ccc', borderRadius: '4px' }} placeholder="Input inside label" />
+      </EmeraldLabel>
+    ),
     props: [
-      { name: 'children', type: 'string', defaultValue: 'Label Text' },
+      { name: 'label', type: 'string', defaultValue: 'Label Text' },
       { name: 'required', type: 'boolean', defaultValue: false },
       { name: 'disabled', type: 'boolean', defaultValue: false },
-      { name: 'error', type: 'boolean', defaultValue: false },
+      { name: 'errorText', type: 'string', defaultValue: '' },
+      { name: 'helperText', type: 'string', defaultValue: '' },
     ]
   },
   {
@@ -238,9 +249,11 @@ const COMPONENT_REGISTRY: ComponentMetadata[] = [
     name: 'EmeraldTooltip',
     category: 'Feedback & Communication',
     component: (props: any) => (
-      <EmeraldTooltip {...props}>
-        <span style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }}>Hover me</span>
-      </EmeraldTooltip>
+      <div style={{ padding: '40px' }}>
+        <EmeraldTooltip {...props}>
+          <span style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px', cursor: 'pointer' }}>Hover me</span>
+        </EmeraldTooltip>
+      </div>
     ),
     props: [
       { name: 'content', type: 'string', defaultValue: 'Tooltip content' },
@@ -265,14 +278,17 @@ const COMPONENT_REGISTRY: ComponentMetadata[] = [
     component: (props: any) => (
       <EmeraldBreadcrumb
         {...props}
-        items={[
-          { label: 'Home', href: '#' },
-          { label: 'Components', href: '#' },
-          { label: 'Breadcrumb', active: true }
+        crumbs={[
+          { label: 'Home', link: '/' },
+          { label: 'Components', link: '/components' },
+          { label: 'Breadcrumb' }
         ]}
       />
     ),
-    props: []
+    props: [
+      { name: 'delimeter', type: 'string', defaultValue: '/' },
+      { name: 'overflowText', type: 'string', defaultValue: '...' },
+    ]
   },
   {
     id: 'emerald-modal',
@@ -282,24 +298,29 @@ const COMPONENT_REGISTRY: ComponentMetadata[] = [
       const [isOpen, setIsOpen] = useState(false);
       return (
         <div>
-          <EmeraldButton onClick={() => setIsOpen(true)}>Open Modal</EmeraldButton>
+          <EmeraldButton label="Open Modal" onClick={() => setIsOpen(true)} />
           <EmeraldModal
             {...props}
-            open={isOpen}
+            opened={isOpen}
             onClose={() => setIsOpen(false)}
+            actionTemplate={
+              <>
+                <EmeraldButton label="Cancel" variant="Secondary" onClick={() => setIsOpen(false)} />
+                <EmeraldButton label="Confirm" variant="Primary" onClick={() => setIsOpen(false)} />
+              </>
+            }
           >
             <div style={{ padding: '20px' }}>
-              <h3>Modal Content</h3>
               <p>This is a modal from Emerald Design System.</p>
-              <EmeraldButton onClick={() => setIsOpen(false)}>Close</EmeraldButton>
             </div>
           </EmeraldModal>
         </div>
       );
     },
     props: [
-      { name: 'title', type: 'string', defaultValue: 'Modal Title' },
-      { name: 'size', type: 'enum', defaultValue: 'medium', options: ['small', 'medium', 'large', 'full-screen'] },
+      { name: 'headerText', type: 'string', defaultValue: 'Modal Title' },
+      { name: 'hasCloseIcon', type: 'boolean', defaultValue: true },
+      { name: 'enableFullscreen', type: 'boolean', defaultValue: false },
     ]
   },
   {
@@ -309,25 +330,31 @@ const COMPONENT_REGISTRY: ComponentMetadata[] = [
     component: EmeraldIconButton,
     props: [
       { name: 'icon', type: 'string', defaultValue: 'star' },
-      { name: 'variant', type: 'enum', defaultValue: 'primary', options: ['primary', 'secondary', 'tertiary', 'ghost'] },
-      { name: 'size', type: 'enum', defaultValue: 'medium', options: ['small', 'medium', 'large'] },
+      { name: 'type', type: 'enum', defaultValue: 'Primary', options: ['Primary', 'Secondary', 'Light', 'Icon'] },
+      { name: 'size', type: 'enum', defaultValue: 'Medium', options: ['Small', 'Medium', 'Large'] },
       { name: 'disabled', type: 'boolean', defaultValue: false },
+      { name: 'danger', type: 'boolean', defaultValue: false },
+      { name: 'shape', type: 'enum', defaultValue: 'Rectangular', options: ['Rectangular', 'Circle'] },
     ]
   },
   {
     id: 'emerald-button-group',
     name: 'EmeraldButtonGroup',
     category: 'Interactive Elements',
-    component: (props: any) => (
-      <EmeraldButtonGroup {...props}>
-        <EmeraldButton>Left</EmeraldButton>
-        <EmeraldButton>Middle</EmeraldButton>
-        <EmeraldButton>Right</EmeraldButton>
-      </EmeraldButtonGroup>
-    ),
+    component: (props: any) => {
+      const [activeIndexes, setActiveIndexes] = useState([0]);
+      return (
+        <EmeraldButtonGroup
+          {...props}
+          activeButtonIndexes={activeIndexes}
+          onChange={setActiveIndexes}
+        />
+      );
+    },
     props: [
-      { name: 'orientation', type: 'enum', defaultValue: 'horizontal', options: ['horizontal', 'vertical'] },
-      { name: 'fullWidth', type: 'boolean', defaultValue: false },
+      { name: 'data', type: 'object', defaultValue: [{ label: 'Day' }, { label: 'Week' }, { label: 'Month' }] },
+      { name: 'multiSelect', type: 'boolean', defaultValue: false },
+      { name: 'direction', type: 'enum', defaultValue: 'horizontal', options: ['horizontal', 'vertical'] },
     ]
   },
   {
@@ -341,6 +368,8 @@ const COMPONENT_REGISTRY: ComponentMetadata[] = [
       { name: 'max', type: 'number', defaultValue: 100 },
       { name: 'step', type: 'number', defaultValue: 1 },
       { name: 'value', type: 'number', defaultValue: 50 },
+      { name: 'showInput', type: 'boolean', defaultValue: true },
+      { name: 'isDiscrete', type: 'boolean', defaultValue: true },
     ]
   },
   {
@@ -349,14 +378,12 @@ const COMPONENT_REGISTRY: ComponentMetadata[] = [
     category: 'Data Display',
     component: (props: any) => (
       <EmeraldList {...props}>
-        <EmeraldListItem>Item 1</EmeraldListItem>
-        <EmeraldListItem>Item 2</EmeraldListItem>
-        <EmeraldListItem>Item 3</EmeraldListItem>
+        <EmeraldListItem label="Item 1" secondaryText="Description 1" prefixType="icon" iconOptions={{ icon: 'star' }} />
+        <EmeraldListItem label="Item 2" secondaryText="Description 2" prefixType="icon" iconOptions={{ icon: 'favorite' }} />
+        <EmeraldListItem label="Item 3" secondaryText="Description 3" prefixType="icon" iconOptions={{ icon: 'settings' }} />
       </EmeraldList>
     ),
-    props: [
-      { name: 'dense', type: 'boolean', defaultValue: false },
-    ]
+    props: []
   },
   {
     id: 'emerald-data-table',
@@ -365,12 +392,12 @@ const COMPONENT_REGISTRY: ComponentMetadata[] = [
     component: (props: any) => (
       <EmeraldDataTable
         {...props}
-        columns={[
-          { key: 'id', label: 'ID' },
-          { key: 'name', label: 'Name' },
-          { key: 'role', label: 'Role' }
+        columnDefs={[
+          { field: 'id', headerName: 'ID' },
+          { field: 'name', headerName: 'Name' },
+          { field: 'role', headerName: 'Role' }
         ]}
-        data={[
+        rowData={[
           { id: '1', name: 'Alice', role: 'Admin' },
           { id: '2', name: 'Bob', role: 'User' },
           { id: '3', name: 'Charlie', role: 'Editor' }
@@ -378,8 +405,9 @@ const COMPONENT_REGISTRY: ComponentMetadata[] = [
       />
     ),
     props: [
-      { name: 'striped', type: 'boolean', defaultValue: true },
-      { name: 'hoverable', type: 'boolean', defaultValue: true },
+      { name: 'tableTitle', type: 'string', defaultValue: 'User Table' },
+      { name: 'viewMode', type: 'enum', defaultValue: 'ZebraStripes', options: ['HorizontalLines', 'ZebraStripes', 'Grid'] },
+      { name: 'showColumnFilters', type: 'boolean', defaultValue: true },
     ]
   }
 ];
